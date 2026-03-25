@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.ryan.bartill.ui.LoginController">
+
+    <!-- Background image -->
+    <ImageView fx:id="bgImage"
+               pickOnBounds="true"
+               preserveRatio="false" />
+
+    <!-- Overlay container -->
+    <BorderPane maxWidth="Infinity" maxHeight="Infinity">
+
+        <!-- Bottom middle keypad -->
+        <bottom>
+            <VBox alignment="CENTER" spacing="10">
+                <padding>
+                    <Insets top="0" right="0" bottom="30" left="0"/>
+                </padding>
+
+                <!-- PIN display (masked) -->
+                <Label fx:id="pinDotsLabel"
+                       text="••"
+                       style="-fx-font-size: 30; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+                <Label fx:id="errorLabel"
+                       text=""
+                       style="-fx-text-fill: #ff6b6b; -fx-font-size: 14;"/>
+
+                <!-- Keypad panel -->
+                <VBox spacing="10"
+                      alignment="CENTER"
+                      style="-fx-background-color: rgba(0,0,0,0.45); -fx-background-radius: 16; -fx-padding: 18;">
+
+                    <GridPane hgap="10" vgap="10" alignment="CENTER">
+
+                        <Button text="1" onAction="#onDigit" GridPane.rowIndex="0" GridPane.columnIndex="0" prefWidth="90" prefHeight="65"/>
+                        <Button text="2" onAction="#onDigit" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="90" prefHeight="65"/>
+                        <Button text="3" onAction="#onDigit" GridPane.rowIndex="0" GridPane.columnIndex="2" prefWidth="90" prefHeight="65"/>
+
+                        <Button text="4" onAction="#onDigit" GridPane.rowIndex="1" GridPane.columnIndex="0" prefWidth="90" prefHeight="65"/>
+                        <Button text="5" onAction="#onDigit" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="90" prefHeight="65"/>
+                        <Button text="6" onAction="#onDigit" GridPane.rowIndex="1" GridPane.columnIndex="2" prefWidth="90" prefHeight="65"/>
+
+                        <Button text="7" onAction="#onDigit" GridPane.rowIndex="2" GridPane.columnIndex="0" prefWidth="90" prefHeight="65"/>
+                        <Button text="8" onAction="#onDigit" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="90" prefHeight="65"/>
+                        <Button text="9" onAction="#onDigit" GridPane.rowIndex="2" GridPane.columnIndex="2" prefWidth="90" prefHeight="65"/>
+
+                        <Button text="⌫" onAction="#onBackspace" GridPane.rowIndex="3" GridPane.columnIndex="0" prefWidth="90" prefHeight="65"/>
+                        <Button text="0" onAction="#onDigit" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="90" prefHeight="65"/>
+                        <Button text="Clear" onAction="#onClear" GridPane.rowIndex="3" GridPane.columnIndex="2" prefWidth="90" prefHeight="65"/>
+                    </GridPane>
+
+                    <Button text="Enter"
+                            onAction="#onEnter"
+                            prefWidth="290"
+                            prefHeight="55"
+                            style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                </VBox>
+            </VBox>
+        </bottom>
+    </BorderPane>
+
+</StackPane>

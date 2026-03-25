@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+
+<BorderPane fx:id="rootPane"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ryan.bartill.inventory.InventoryDashboardController">
+
+    <top>
+        <HBox spacing="12" style="-fx-background-color: #2b2b2b;">
+            <padding>
+                <Insets top="12" right="12" bottom="12" left="12"/>
+            </padding>
+
+            <Label text="Stock &amp; Inventory System"
+                   style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Button text="Refresh Dashboard" onAction="#onRefreshDashboardClicked"/>
+            <Button text="Close" onAction="#onCloseWindow"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane fx:id="inventoryTabPane" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+
+                <Tab text="Dashboard">
+                    <content>
+                        <VBox spacing="16">
+                            <padding>
+                                <Insets top="16" right="16" bottom="16" left="16"/>
+                            </padding>
+
+                            <!-- TOP SUMMARY CARDS -->
+                            <HBox spacing="16">
+                                <VBox spacing="8"
+                                      prefWidth="220"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                    <Label text="Total Products"
+                                           style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
+                                    <Label fx:id="totalProductsLabel"
+                                           text="0"
+                                           style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+                                </VBox>
+
+                                <VBox spacing="8"
+                                      prefWidth="220"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                    <Label text="Total Stock Units"
+                                           style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
+                                    <Label fx:id="totalStockUnitsLabel"
+                                           text="0"
+                                           style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+                                </VBox>
+
+                                <VBox spacing="8"
+                                      prefWidth="220"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                    <Label text="Retail Stock Value"
+                                           style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
+                                    <Label fx:id="totalRetailValueLabel"
+                                           text="€0.00"
+                                           style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+                                </VBox>
+
+                                <VBox spacing="8"
+                                      prefWidth="220"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                    <Label text="Cost Stock Value"
+                                           style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
+                                    <Label fx:id="totalCostValueLabel"
+                                           text="€0.00"
+                                           style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+                                </VBox>
+
+                                <VBox spacing="8"
+                                      prefWidth="220"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                    <Label text="Low Stock Items"
+                                           style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
+                                    <Label fx:id="lowStockCountLabel"
+                                           text="0"
+                                           style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+                                </VBox>
+                            </HBox>
+
+                            <!-- QUICK ACTIONS -->
+                            <VBox spacing="10"
+                                  style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                <Label text="Quick Actions"
+                                       style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+                                <HBox spacing="12">
+                                    <Button text="Go to Inventory"
+                                            onAction="#onGoToInventoryTab"
+                                            prefWidth="180"
+                                            prefHeight="70"/>
+
+                                    <Button text="Go to Deliveries"
+                                            onAction="#onGoToDeliveriesTab"
+                                            prefWidth="180"
+                                            prefHeight="70"/>
+
+                                    <Button text="Go to Stock Take"
+                                            onAction="#onGoToStockTakeTab"
+                                            prefWidth="180"
+                                            prefHeight="70"/>
+
+                                    <Button text="Go to Reports"
+                                            onAction="#onGoToReportsTab"
+                                            prefWidth="180"
+                                            prefHeight="70"/>
+                                </HBox>
+                            </VBox>
+
+                            <!-- LOWER PANELS -->
+                            <HBox spacing="16" VBox.vgrow="ALWAYS">
+                                <VBox spacing="10"
+                                      prefWidth="500"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;"
+                                      VBox.vgrow="ALWAYS">
+                                    <Label text="Low Stock Alerts"
+                                           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                                    <ListView fx:id="lowStockListView" VBox.vgrow="ALWAYS"/>
+                                </VBox>
+
+                                <VBox spacing="10"
+                                      prefWidth="500"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;"
+                                      VBox.vgrow="ALWAYS">
+                                    <Label text="Recent Stock Activity"
+                                           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                                    <ListView fx:id="recentActivityListView" VBox.vgrow="ALWAYS"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Inventory">
+                    <content>
+                        <BorderPane>
+                            <padding>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
+                            </padding>
+
+                            <top>
+                                <HBox spacing="10">
+                                    <Label text="Inventory" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                                </HBox>
+                            </top>
+
+                            <center>
+                                <TableView fx:id="inventoryTable">
+                                    <columns>
+                                        <TableColumn fx:id="colInventoryName" text="Product" prefWidth="220"/>
+                                        <TableColumn fx:id="colInventoryCategory" text="Category" prefWidth="140"/>
+                                        <TableColumn fx:id="colInventoryBarcode" text="Barcode" prefWidth="140"/>
+                                        <TableColumn fx:id="colInventorySellPrice" text="Sell Price" prefWidth="110"/>
+                                        <TableColumn fx:id="colInventoryCostPrice" text="Cost Price" prefWidth="110"/>
+                                        <TableColumn fx:id="colInventoryStock" text="Stock" prefWidth="90"/>
+                                        <TableColumn fx:id="colInventoryRetailValue" text="Retail Value" prefWidth="130"/>
+                                        <TableColumn fx:id="colInventoryCostValue" text="Cost Value" prefWidth="130"/>
+                                    </columns>
+                                </TableView>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Product Stock Links">
+                    <content>
+                        <BorderPane>
+                            <padding>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
+                            </padding>
+
+                            <top>
+                                <HBox spacing="10">
+                                    <Label text="Default Product Stock Links" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                                    <Pane HBox.hgrow="ALWAYS"/>
+                                    <Button text="Import CSV" onAction="#onImportDefaultStockLinksCsvClicked"/>
+                                    <Button text="Refresh" onAction="#onRefreshProductLinksClicked"/>
+                                </HBox>
+                            </top>
+
+                            <center>
+                                <TableView fx:id="productLinksTable">
+                                    <columns>
+                                        <TableColumn fx:id="colLinkProduct" text="Product" prefWidth="220"/>
+                                        <TableColumn fx:id="colLinkCategory" text="Category" prefWidth="130"/>
+                                        <TableColumn fx:id="colLinkStockItem" text="Default Stock Item" prefWidth="220"/>
+                                        <TableColumn fx:id="colLinkQtyUsed" text="Qty Used" prefWidth="100"/>
+                                    </columns>
+                                </TableView>
+                            </center>
+
+                            <right>
+                                <VBox spacing="10" prefWidth="320"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                    <Label text="Set Default Stock Link" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+                                    <Label text="Product"/>
+                                    <ComboBox fx:id="linkProductCombo" prefWidth="280"/>
+
+                                    <Label text="Stock Item"/>
+                                    <ComboBox fx:id="linkStockItemCombo" prefWidth="280"/>
+
+                                    <Label text="Qty Used"/>
+                                    <TextField fx:id="linkQtyUsedField" promptText="e.g. 35, 200, 568"/>
+
+                                    <Button text="Save Link"
+                                            onAction="#onSaveProductLinkClicked"
+                                            prefHeight="45"
+                                            maxWidth="Infinity"/>
+
+                                    <Label fx:id="productLinkMessageLabel"/>
+                                </VBox>
+                            </right>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Stock Items">
+                    <content>
+                        <BorderPane>
+                            <padding>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
+                            </padding>
+
+                            <top>
+                                <HBox spacing="10">
+                                    <Label text="Stock Items" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                                    <Pane HBox.hgrow="ALWAYS"/>
+                                    <Button text="Import CSV" onAction="#onImportStockItemsCsvClicked"/>
+                                    <Button text="Refresh" onAction="#onRefreshStockItemsClicked"/>
+                                </HBox>
+                            </top>
+
+                            <center>
+                                <TableView fx:id="stockItemsTable">
+                                    <columns>
+                                        <TableColumn fx:id="colStockItemName" text="Name" prefWidth="180"/>
+                                        <TableColumn fx:id="colStockItemCategory" text="Category" prefWidth="120"/>
+                                        <TableColumn fx:id="colStockItemBaseUnit" text="Base Unit" prefWidth="90"/>
+                                        <TableColumn fx:id="colStockItemUnitName" text="Stock Unit" prefWidth="100"/>
+                                        <TableColumn fx:id="colStockItemUnitSize" text="Unit Size" prefWidth="100"/>
+                                        <TableColumn fx:id="colStockItemCurrentBaseQty" text="Base Qty" prefWidth="100"/>
+                                        <TableColumn fx:id="colStockItemCurrentUnits" text="Stock Units" prefWidth="100"/>
+                                        <TableColumn fx:id="colStockItemCostPrice" text="Cost / Unit" prefWidth="100"/>
+                                        <TableColumn fx:id="colStockItemStockValue" text="Stock Value" prefWidth="110"/>
+                                    </columns>
+                                </TableView>
+                            </center>
+
+                            <right>
+                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                    <content>
+                                        <VBox spacing="10" prefWidth="300"
+                                              style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                            <Label text="Create Stock Item" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+                                            <TextField fx:id="stockItemNameField" promptText="Name e.g. Smirnoff Vodka"/>
+                                            <TextField fx:id="stockItemCategoryField" promptText="Category e.g. Spirits"/>
+                                            <TextField fx:id="stockItemBaseUnitField" promptText="Base unit e.g. ml or unit"/>
+                                            <TextField fx:id="stockItemUnitNameField" promptText="Stock unit e.g. bottle / keg / can"/>
+                                            <TextField fx:id="stockItemUnitSizeField" promptText="Unit size e.g. 700 or 50000"/>
+                                            <TextField fx:id="stockItemInitialUnitsField" promptText="Initial stock units e.g. 24"/>
+                                            <TextField fx:id="stockItemCostPriceField" promptText="Cost per stock unit e.g. 14.50"/>
+
+                                            <Button text="Create Stock Item"
+                                                    onAction="#onCreateStockItemClicked"
+                                                    prefHeight="45"
+                                                    maxWidth="Infinity"/>
+
+                                            <Label fx:id="stockItemMessageLabel"/>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </right>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Recipes">
+                    <content>
+                        <BorderPane>
+                            <padding>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
+                            </padding>
+
+                            <top>
+                                <HBox spacing="10">
+                                    <Label text="Recipe Mapping" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                                    <Pane HBox.hgrow="ALWAYS"/>
+                                    <Button text="Import CSV" onAction="#onImportRecipesCsvClicked"/>
+                                    <Button text="Refresh" onAction="#onRefreshRecipesClicked"/>
+                                </HBox>
+                            </top>
+
+                            <center>
+                                <VBox spacing="12">
+                                    <Label text="Current product recipe links" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+
+                                    <TableView fx:id="recipesTable" VBox.vgrow="ALWAYS">
+                                        <columns>
+                                            <TableColumn fx:id="colRecipeProduct" text="Product" prefWidth="220"/>
+                                            <TableColumn fx:id="colRecipeStockItem" text="Stock Item" prefWidth="220"/>
+                                            <TableColumn fx:id="colRecipeQtyUsed" text="Base Units Used" prefWidth="140"/>
+                                        </columns>
+                                    </TableView>
+                                </VBox>
+                            </center>
+
+                            <right>
+                                <VBox spacing="10" prefWidth="320"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                    <Label text="Create / Replace Recipe" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+                                    <Label text="Product"/>
+                                    <ComboBox fx:id="recipeProductCombo" prefWidth="280"/>
+
+                                    <Label text="Stock Item"/>
+                                    <ComboBox fx:id="recipeStockItemCombo" prefWidth="280"/>
+
+                                    <Label text="Base Units Used"/>
+                                    <TextField fx:id="recipeQtyUsedField" promptText="e.g. 35 for vodka shot, 568 for pint"/>
+
+                                    <Button text="Save Recipe"
+                                            onAction="#onSaveRecipeClicked"
+                                            prefHeight="45"
+                                            maxWidth="Infinity"/>
+
+                                    <Label fx:id="recipeMessageLabel"/>
+                                </VBox>
+                            </right>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Deliveries">
+                    <content>
+                        <BorderPane>
+                            <padding>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
+                            </padding>
+
+                            <top>
+                                <HBox spacing="10">
+                                    <Label text="Deliveries" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                                    <Pane HBox.hgrow="ALWAYS"/>
+                                    <Button text="Refresh" onAction="#onRefreshDeliveriesClicked"/>
+                                </HBox>
+                            </top>
+
+                            <center>
+                                <TableView fx:id="deliveriesTable">
+                                    <columns>
+                                        <TableColumn fx:id="colDeliveryName" text="Stock Item" prefWidth="200"/>
+                                        <TableColumn fx:id="colDeliveryCategory" text="Category" prefWidth="130"/>
+                                        <TableColumn fx:id="colDeliveryUnitName" text="Unit" prefWidth="90"/>
+                                        <TableColumn fx:id="colDeliveryUnitSize" text="Unit Size" prefWidth="100"/>
+                                        <TableColumn fx:id="colDeliveryCurrentUnits" text="Current Units" prefWidth="120"/>
+                                        <TableColumn fx:id="colDeliveryCostPrice" text="Cost / Unit" prefWidth="110"/>
+                                    </columns>
+                                </TableView>
+                            </center>
+
+                            <right>
+                                <VBox spacing="10" prefWidth="300"
+                                      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                    <Label text="Record Delivery" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+                                    <Label fx:id="deliverySelectedLabel" text="Select a stock item"/>
+
+                                    <Label fx:id="deliveryQtyLabel" text="Quantity Delivered"/>
+                                    <TextField fx:id="deliveryQtyField" promptText="e.g. 24"/>
+
+                                    <Label text="Cost Per Unit"/>
+                                    <TextField fx:id="deliveryCostField" promptText="e.g. 14.50"/>
+
+                                    <Button text="Add Delivery"
+                                            onAction="#onAddDeliveryClicked"
+                                            maxWidth="Infinity"
+                                            prefHeight="45"/>
+
+                                    <Label fx:id="deliveryMessageLabel"/>
+                                </VBox>
+                            </right>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+
+                <Tab text="Stock Take">
+                    <content>
+                        <BorderPane>
+                            <padding>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
+                            </padding>
+
+                            <top>
+                                <VBox spacing="12">
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <Label text="Stock Take" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                                        <Pane HBox.hgrow="ALWAYS"/>
+                                        <Button text="Start New Stock Take" onAction="#onStartNewStockTakeClicked"/>
+                                        <Button text="Refresh" onAction="#onRefreshStockTakeClicked"/>
+                                        <Button text="Save Counts" onAction="#onSaveStockTakeClicked"/>
+                                        <Button text="Post Adjustments" onAction="#onPostStockTakeAdjustmentsClicked"/>
+                                        <Button text="Export Stock Take"
+                                                onAction="#onExportStockTakeExcelClicked"
+                                                prefWidth="180"
+                                                prefHeight="40"
+                                                styleClass="primary-button"/>
+                                    </HBox>
+
+                                    <HBox spacing="16">
+                                        <VBox spacing="6"
+                                              prefWidth="220"
+                                              style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 14; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                            <Label text="Stock Items Counted"
+                                                   style="-fx-font-size: 13; -fx-text-fill: #666666;"/>
+                                            <Label fx:id="stockTakeItemsCountLabel"
+                                                   text="0"
+                                                   style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                                        </VBox>
+
+                                        <VBox spacing="6"
+                                              prefWidth="220"
+                                              style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 14; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                            <Label text="Total Expected Value"
+                                                   style="-fx-font-size: 13; -fx-text-fill: #666666;"/>
+                                            <Label fx:id="stockTakeExpectedValueLabel"
+                                                   text="€0.00"
+                                                   style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                                        </VBox>
+
+                                        <VBox spacing="6"
+                                              prefWidth="220"
+                                              style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 14; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                            <Label text="Total Actual Value"
+                                                   style="-fx-font-size: 13; -fx-text-fill: #666666;"/>
+                                            <Label fx:id="stockTakeActualValueLabel"
+                                                   text="€0.00"
+                                                   style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                                        </VBox>
+
+                                        <VBox spacing="6"
+                                              prefWidth="220"
+                                              style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 14; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                            <Label text="Variance Value"
+                                                   style="-fx-font-size: 13; -fx-text-fill: #666666;"/>
+                                            <Label fx:id="stockTakeVarianceValueLabel"
+                                                   text="€0.00"
+                                                   style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                                        </VBox>
+
+                                        <VBox spacing="6"
+                                              prefWidth="220"
+                                              style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 14; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+                                            <Label text="Items With Variance"
+                                                   style="-fx-font-size: 13; -fx-text-fill: #666666;"/>
+                                            <Label fx:id="stockTakeVarianceCountLabel"
+                                                   text="0"
+                                                   style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                                        </VBox>
+                                    </HBox>
+                                </VBox>
+                            </top>
+
+                            <center>
+                                <TableView fx:id="stockTakeTable">
+                                    <columns>
+                                        <TableColumn fx:id="colStockTakeName" text="Stock Item" prefWidth="190"/>
+                                        <TableColumn fx:id="colStockTakeCategory" text="Category" prefWidth="120"/>
+                                        <TableColumn fx:id="colStockTakeUnitName" text="Unit" prefWidth="90"/>
+                                        <TableColumn fx:id="colStockTakeUnitSize" text="Unit Size" prefWidth="90"/>
+                                        <TableColumn fx:id="colStockTakeExpectedUnits" text="Expected Units" prefWidth="110"/>
+                                        <TableColumn fx:id="colStockTakeExpectedBaseQty" text="Expected Base Qty" prefWidth="130"/>
+                                        <TableColumn fx:id="colStockTakeActualUnits" text="Actual Units" prefWidth="100"/>
+                                        <TableColumn fx:id="colStockTakeActualBaseQty" text="Actual Base Qty" prefWidth="120"/>
+                                        <TableColumn fx:id="colStockTakeVarianceUnits" text="Variance Units" prefWidth="110"/>
+                                        <TableColumn fx:id="colStockTakeVarianceBaseQty" text="Variance Base Qty" prefWidth="130"/>
+                                        <TableColumn fx:id="colStockTakeCostPerUnit" text="Cost / Unit" prefWidth="100"/>
+                                        <TableColumn fx:id="colStockTakeVarianceValue" text="Variance Value" prefWidth="120"/>
+                                    </columns>
+                                </TableView>
+                            </center>
+
+                            <right>
+                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                    <content>
+                                        <VBox spacing="14" prefWidth="330"
+                                              style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #dddddd; -fx-border-radius: 12;">
+
+                                            <Label text="Count Selected Item" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+                                            <Label fx:id="stockTakeSelectedItemLabel"
+                                                   text="Select a stock item from the table"
+                                                   wrapText="true"
+                                                   style="-fx-font-size: 13; -fx-text-fill: #444444;"/>
+
+                                            <Separator/>
+                                            <Label fx:id="stockTakeExpectedUnitsLabel" text="Expected Units"/>
+                                            <TextField fx:id="stockTakeExpectedUnitsField"
+                                                       editable="false"
+                                                       promptText="Expected units"/>
+
+                                            <Label fx:id="stockTakeActualUnitsLabel" text="Full Units Counted"/>
+                                            <TextField fx:id="stockTakeActualUnitsField"
+                                                       promptText="Enter full units counted e.g. 18"/>
+
+                                            <Label text="Open Amount"/>
+                                            <TextField fx:id="stockTakeActualLooseQtyField"
+                                                       promptText="Optional open amount e.g. 350 ml"/>
+
+                                            <Label text="Reason / Notes"/>
+                                            <TextArea fx:id="stockTakeNotesArea"
+                                                      promptText="Optional note for variance, breakage, missing stock, open bottle etc."
+                                                      prefRowCount="4"
+                                                      wrapText="true"/>
+
+                                            <Button text="Apply Count"
+                                                    onAction="#onApplyStockTakeCountClicked"
+                                                    prefHeight="45"
+                                                    maxWidth="Infinity"/>
+
+                                            <Button text="Clear Selected Count"
+                                                    onAction="#onClearStockTakeCountClicked"
+                                                    prefHeight="45"
+                                                    maxWidth="Infinity"/>
+
+                                            <Separator/>
+
+
+                                            <Label text="Filters" style="-fx-font-size: 15; -fx-font-weight: bold;"/>
+
+                                            <TextField fx:id="stockTakeSearchField"
+                                                       promptText="Search stock item name"
+                                                       onKeyReleased="#onStockTakeSearchChanged"/>
+
+                                            <ComboBox fx:id="stockTakeCategoryCombo"
+                                                      prefWidth="280"
+                                                      promptText="Filter by category"
+                                                      onAction="#onStockTakeFilterChanged"/>
+
+                                            <CheckBox fx:id="stockTakeVarianceOnlyCheckBox"
+                                                      text="Show variance only"
+                                                      onAction="#onStockTakeFilterChanged"/>
+
+                                            <CheckBox fx:id="stockTakeUncountedOnlyCheckBox"
+                                                      text="Show uncounted only"
+                                                      onAction="#onStockTakeFilterChanged"/>
+
+                                            <Separator/>
+
+                                            <Label text="Session Info" style="-fx-font-size: 15; -fx-font-weight: bold;"/>
+
+                                            <Label fx:id="stockTakeSessionLabel"
+                                                   text="No active stock take session"
+                                                   wrapText="true"/>
+
+                                            <Label fx:id="stockTakeMessageLabel"
+                                                   wrapText="true"
+                                                   style="-fx-text-fill: #1f4e79; -fx-font-weight: bold;"/>
+
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </right>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Wastage">
+                    <content>
+                        <VBox spacing="12" alignment="TOP_LEFT">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+
+                            <Label text="Record Wastage"
+                                   style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+                            <HBox spacing="10">
+                                <Label text="Stock Item:"/>
+                                <ComboBox fx:id="wastageStockItemCombo" prefWidth="250"/>
+                            </HBox>
+
+                            <HBox spacing="10">
+                                <Label text="Quantity:"/>
+                                <TextField fx:id="wastageQtyField" promptText="Enter quantity"/>
+                            </HBox>
+
+                            <HBox spacing="10">
+                                <Label text="Reason:"/>
+                                <TextField fx:id="wastageReasonField" promptText="Optional"/>
+                            </HBox>
+
+                            <Button text="Record Wastage"
+                                    onAction="#onRecordWastageClicked"
+                                    prefWidth="200"/>
+
+                            <Label fx:id="wastageMessageLabel"
+                                   style="-fx-text-fill: red;"/>
+
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Reports">
+                    <content>
+                        <BorderPane>
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+
+                            <top>
+                                <VBox spacing="10">
+                                    <Label text="Reports Dashboard"
+                                           style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <Label text="From:"/>
+                                        <DatePicker fx:id="reportFromDate"/>
+
+                                        <Label text="To:"/>
+                                        <DatePicker fx:id="reportToDate"/>
+
+                                        <Button text="Run Report" onAction="#onRunReportClicked"/>
+                                        <Button text="Export CSV" onAction="#onExportReportsCsvClicked"/>
+                                        <Button text="Export Excel" onAction="#onExportReportsExcelClicked"/>
+
+                                        <Pane HBox.hgrow="ALWAYS"/>
+                                        <Label fx:id="reportMessageLabel" text=""/>
+                                    </HBox>
+
+                                    <HBox spacing="30">
+                                        <VBox>
+                                            <Label text="Revenue"/>
+                                            <Label fx:id="reportRevenueLabel" text="€0.00" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                                        </VBox>
+                                        <VBox>
+                                            <Label text="Cost"/>
+                                            <Label fx:id="reportCostLabel" text="€0.00" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                                        </VBox>
+                                        <VBox>
+                                            <Label text="Profit"/>
+                                            <Label fx:id="reportProfitLabel" text="€0.00" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                                        </VBox>
+                                        <VBox>
+                                            <Label text="Wastage Loss"/>
+                                            <Label fx:id="reportWastageLossLabel" text="€0.00" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                                        </VBox>
+                                    </HBox>
+                                </VBox>
+                            </top>
+
+                            <center>
+                                <ScrollPane fitToWidth="true">
+                                    <content>
+                                        <VBox spacing="14">
+
+                                            <TitledPane text="Charts" expanded="true">
+                                                <content>
+                                                    <VBox spacing="12">
+                                                        <LineChart fx:id="reportRevenueChart" title="Revenue by Day" createSymbols="false" animated="false">
+                                                            <xAxis>
+                                                                <CategoryAxis label="Day"/>
+                                                            </xAxis>
+                                                            <yAxis>
+                                                                <NumberAxis label="Revenue (€ ex VAT)"/>
+                                                            </yAxis>
+                                                        </LineChart>
+
+                                                        <BarChart fx:id="reportHourlySalesChart" title="Hourly Sales" animated="false">
+                                                            <xAxis>
+                                                                <CategoryAxis label="Hour"/>
+                                                            </xAxis>
+                                                            <yAxis>
+                                                                <NumberAxis label="Sales (€ ex VAT)"/>
+                                                            </yAxis>
+                                                        </BarChart>
+                                                    </VBox>
+                                                </content>
+                                            </TitledPane>
+
+                                            <TitledPane text="Smart Insights" expanded="true">
+                                                <content>
+                                                    <VBox spacing="10">
+                                                        <ListView fx:id="reportInsightsListView" prefHeight="160"/>
+                                                    </VBox>
+                                                </content>
+                                            </TitledPane>
+
+                                            <TitledPane text="Top Products" expanded="true">
+                                                <content>
+                                                    <VBox spacing="10">
+                                                        <GridPane fx:id="reportProductHeatmapGrid" hgap="8" vgap="8"/>
+
+                                                        <TableView fx:id="reportTopProductsTable" prefHeight="220">
+                                                            <columns>
+                                                                <TableColumn fx:id="colReportProduct" text="Product" prefWidth="220"/>
+                                                                <TableColumn fx:id="colReportQty" text="Qty Sold" prefWidth="100"/>
+                                                                <TableColumn fx:id="colReportRevenue" text="Revenue" prefWidth="120"/>
+                                                                <TableColumn fx:id="colReportProfit" text="Profit" prefWidth="120"/>
+                                                            </columns>
+                                                        </TableView>
+                                                    </VBox>
+                                                </content>
+                                            </TitledPane>
+
+                                            <TitledPane text="Wastage" expanded="false">
+                                                <content>
+                                                    <TableView fx:id="reportWastageTable" prefHeight="220">
+                                                        <columns>
+                                                            <TableColumn fx:id="colWasteItem" text="Item" prefWidth="220"/>
+                                                            <TableColumn fx:id="colWasteQty" text="Qty" prefWidth="100"/>
+                                                            <TableColumn fx:id="colWasteReason" text="Reason" prefWidth="180"/>
+                                                            <TableColumn fx:id="colWasteValue" text="Value" prefWidth="120"/>
+                                                        </columns>
+                                                    </TableView>
+                                                </content>
+                                            </TitledPane>
+
+                                            <TitledPane text="Stock Intelligence" expanded="true">
+                                                <content>
+                                                    <TableView fx:id="reportStockAlertsTable" prefHeight="220">
+                                                        <columns>
+                                                            <TableColumn fx:id="colStockAlertItem" text="Stock Item" prefWidth="220"/>
+                                                            <TableColumn fx:id="colStockAlertCurrent" text="Current Units" prefWidth="120"/>
+                                                            <TableColumn fx:id="colStockAlertDailyUse" text="Avg Daily Use" prefWidth="120"/>
+                                                            <TableColumn fx:id="colStockAlertDaysLeft" text="Days Left" prefWidth="100"/>
+                                                            <TableColumn fx:id="colStockAlertSuggestion" text="Suggestion" prefWidth="240"/>
+                                                        </columns>
+                                                    </TableView>
+                                                </content>
+                                            </TitledPane>
+
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+            </tabs>
+        </TabPane>
+    </center>
+
+</BorderPane>

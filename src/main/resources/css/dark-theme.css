@@ -1,0 +1,447 @@
+/* =========================
+   BAR TILL SYSTEM
+   DARK PROFESSIONAL POS THEME
+   ========================= */
+
+/* ===== ROOT ===== */
+.root {
+    -fx-background-color: #1b1f24;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+    -fx-font-size: 15px;
+}
+
+/* ===== GENERAL TEXT ===== */
+.label {
+    -fx-text-fill: #e6ebf0;
+}
+
+.title-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.section-label {
+    -fx-text-fill: #f2f5f8;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.subtle-label {
+    -fx-text-fill: #9aa6b2;
+}
+
+.error-label {
+    -fx-text-fill: #ff7b7b;
+    -fx-font-weight: bold;
+}
+
+.success-label {
+    -fx-text-fill: #6fd39a;
+    -fx-font-weight: bold;
+}
+
+/* ===== PANELS ===== */
+.panel {
+    -fx-background-color: #262c33;
+    -fx-background-radius: 6;
+    -fx-border-color: #39424c;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+}
+
+.top-bar {
+    -fx-background-color: #22272e;
+    -fx-border-color: #39424c;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* ===== SEPARATORS ===== */
+.separator .line {
+    -fx-border-color: #3b444f;
+}
+
+/* ===== BUTTONS ===== */
+.button {
+    -fx-background-color: #3a424c;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-border-color: #4a5561;
+    -fx-border-width: 1;
+    -fx-padding: 8 14 8 14;
+    -fx-pref-height: 40;
+}
+
+.button:hover {
+    -fx-background-color: #46505b;
+}
+
+.button:pressed {
+    -fx-background-color: #313841;
+}
+
+/* action buttons */
+.button-primary {
+    -fx-background-color: #2f6fad;
+    -fx-border-color: #275b8f;
+    -fx-text-fill: white;
+}
+.button-primary:hover {
+    -fx-background-color: #285f94;
+}
+
+.button-success {
+    -fx-background-color: #2f8f5b;
+    -fx-border-color: #27754b;
+    -fx-text-fill: white;
+}
+.button-success:hover {
+    -fx-background-color: #27754b;
+}
+
+.button-warning {
+    -fx-background-color: #b88230;
+    -fx-border-color: #996b24;
+    -fx-text-fill: white;
+}
+.button-warning:hover {
+    -fx-background-color: #996b24;
+}
+
+.button-danger {
+    -fx-background-color: #b34b4b;
+    -fx-border-color: #963d3d;
+    -fx-text-fill: white;
+}
+.button-danger:hover {
+    -fx-background-color: #963d3d;
+}
+
+.button-neutral {
+    -fx-background-color: #5d6874;
+    -fx-border-color: #4d5761;
+    -fx-text-fill: white;
+}
+.button-neutral:hover {
+    -fx-background-color: #4d5761;
+}
+
+/* ===== BIG POS BUTTONS ===== */
+.big-action-button {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 80;
+}
+
+.payment-button {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}
+
+/* ===== QUICK BUTTONS ===== */
+.quick-button {
+    -fx-background-color: #343b44;
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: black;
+    -fx-border-width: 0.5;
+    -fx-pref-width: 150;
+    -fx-pref-height: 85;
+    -fx-wrap-text: false;
+    -fx-alignment: center;
+}
+
+.quick-button:hover {
+    -fx-background-color: #404852;
+}
+
+/* optional quick colours */
+.quick-blue {
+    -fx-background-color: #355c7d;
+}
+.quick-green {
+    -fx-background-color: #3d7a57;
+}
+.quick-orange {
+    -fx-background-color: #9a6a2f;
+}
+.quick-red {
+    -fx-background-color: #8b4545;
+}
+.quick-purple {
+    -fx-background-color: #5c4b8a;
+}
+
+/* ===== TEXT INPUTS ===== */
+.text-field,
+.password-field,
+.combo-box,
+.date-picker,
+.spinner {
+    -fx-background-color: #20252b;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #8f9ba8;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-border-color: #414b56;
+    -fx-border-width: 1;
+    -fx-pref-height: 38;
+}
+
+.text-field:focused,
+.password-field:focused,
+.combo-box:focused,
+.date-picker:focused,
+.spinner:focused {
+    -fx-border-color: #2f6fad;
+}
+
+/* spinner editor */
+.spinner .text-field {
+    -fx-background-color: #20252b;
+    -fx-text-fill: white;
+}
+
+/* ===== TEXT AREA ===== */
+.text-area {
+    -fx-background-color: #20252b;
+    -fx-border-color: #414b56;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.text-area .content {
+    -fx-background-color: #20252b;
+}
+
+.text-area,
+.text-area .text {
+    -fx-text-fill: white;
+}
+
+/* ===== TITLED PANE ===== */
+.titled-pane {
+    -fx-text-fill: white;
+}
+
+.titled-pane > .title {
+    -fx-background-color: #2d343c;
+    -fx-border-color: #414b56;
+    -fx-font-weight: bold;
+}
+
+.titled-pane > *.content {
+    -fx-background-color: #262c33;
+    -fx-border-color: #414b56;
+}
+
+/* ===== LIST VIEW ===== */
+.list-view {
+    -fx-background-color: #20252b;
+    -fx-border-color: #3a444f;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.list-cell {
+    -fx-background-color: #20252b;
+    -fx-text-fill: #f2f5f8;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #2d343c;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #2f6fad;
+    -fx-text-fill: white;
+}
+
+/* ===== TABLE VIEW ===== */
+.table-view {
+    -fx-background-color: #20252b;
+    -fx-control-inner-background: #20252b;
+    -fx-border-color: #3a444f;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #2e353d;
+}
+
+.table-view .column-header {
+    -fx-background-color: #2e353d;
+    -fx-border-color: #414b56;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-background-color: #20252b;
+    -fx-text-fill: white;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #252b32;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #2f6fad;
+}
+
+.table-cell {
+    -fx-text-fill: white;
+    -fx-border-color: transparent #38414b transparent transparent;
+}
+
+/* ===== TAB PANE ===== */
+.tab-pane {
+    -fx-background-color: #1b1f24;
+}
+
+.tab-pane .tab-header-area {
+    -fx-background-color: #171b1f;
+    -fx-padding: 5 5 0 5;
+}
+
+.tab-pane .headers-region {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #2b3138;
+    -fx-background-radius: 4 4 0 0;
+    -fx-padding: 8 16 8 16;
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color: #343b44;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #2f6fad;
+}
+
+.tab-pane .tab-label {
+    -fx-text-fill: #dfe6ee;
+    -fx-font-weight: bold;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab-pane .tab-content-area {
+    -fx-background-color: #1b1f24;
+    -fx-border-color: #343d47;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* ===== SCROLL PANE ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ===== SPLIT PANE ===== */
+.split-pane {
+    -fx-background-color: transparent;
+}
+
+.split-pane-divider {
+    -fx-background-color: #39424c;
+    -fx-padding: 1;
+}
+
+/* ===== QUICK LAYOUT / TABS AREA ===== */
+.quick-layout {
+    -fx-background-color: #1b1f24;
+}
+
+.grid-background {
+    -fx-background-color: #20252b;
+    -fx-background-radius: 0;
+    -fx-border-color: #39424c;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-padding: 0;
+}
+
+/* ===== TAB BOXES ===== */
+.tab-box {
+    -fx-background-color: #303740;
+    -fx-border-color: #46505b;
+    -fx-border-width: 1;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+}
+
+.tab-box:hover {
+    -fx-background-color: #39414b;
+}
+
+.tab-box-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+
+
+.payment-card {
+    -fx-background-color: #2f6fad;
+    -fx-text-fill: white;
+
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+
+    -fx-pref-width: 420;
+    -fx-pref-height: 320;
+
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.payment-card:hover {
+    -fx-background-color: #285f94;
+}
+
+.payment-cash {
+    -fx-background-color: #2f8f5b;
+    -fx-text-fill: white;
+
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+
+    -fx-pref-width: 420;
+    -fx-pref-height: 320;
+
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.payment-cash:hover {
+    -fx-background-color: #27754b;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

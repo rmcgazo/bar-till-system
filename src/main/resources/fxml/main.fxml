@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ryan.bartill.ui.MainController">
+
+    <top>
+        <HBox spacing="12" styleClass="top-bar">
+            <padding>
+                <Insets top="12" right="12" bottom="12" left="12"/>
+            </padding>
+
+            <Label fx:id="userLabel" text="Logged in as:" styleClass="section-label"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="inventoryButton"
+                    text="Stock &amp; Inventory"
+                    onAction="#onOpenInventorySystem"
+                    styleClass="button-primary"/>
+
+            <Button text="Logout"
+                    onAction="#onLogoutClicked"
+                    styleClass="button-danger"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane fx:id="tabPane">
+
+
+
+            <!-- QUICK LAYOUT -->
+            <Tab fx:id="quickLayoutTab" text="Quick Layout" closable="false">
+                <content>
+                    <BorderPane styleClass="quick-layout">
+                        <padding>
+                            <Insets top="12" right="12" bottom="12" left="12"/>
+                        </padding>
+
+                        <top>
+                            <HBox spacing="10" styleClass="panel">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
+
+                                <Label text="Quick Buttons Layout" styleClass="section-label"/>
+                                <Pane HBox.hgrow="ALWAYS"/>
+                                <Button text="Load Page 1" onAction="#onLoadQuickPage1" styleClass="button-primary"/>
+                                <Button text="Load Page 2" onAction="#onLoadQuickPage2" styleClass="button-neutral"/>
+                            </HBox>
+                        </top>
+
+                        <center>
+                            <ScrollPane fitToWidth="true" fitToHeight="true">
+                                <content>
+                                    <GridPane fx:id="layoutGrid" hgap="0" vgap="0" styleClass="grid-background"/>
+                                </content>
+                            </ScrollPane>
+                        </center>
+
+                        <right>
+                            <VBox spacing="10" prefWidth="310" styleClass="panel">
+                                <padding>
+                                    <Insets top="12" right="12" bottom="12" left="12"/>
+                                </padding>
+
+                                <Label text="Selected Tile" styleClass="section-label"/>
+                                <Label fx:id="layoutSelectedLabel" text="Click a tile"/>
+
+                                <Separator/>
+
+                                <Label text="Type"/>
+                                <ComboBox fx:id="layoutTypeCombo"/>
+
+                                <Label text="Product"/>
+                                <ComboBox fx:id="layoutProductCombo"/>
+
+                                <Label text="Category"/>
+                                <ComboBox fx:id="layoutCategoryCombo"/>
+
+                                <Label text="Label override"/>
+                                <TextField fx:id="layoutLabelField" promptText="Leave blank to use product/category name"/>
+
+                                <Label text="Color hex"/>
+                                <TextField fx:id="layoutColorField" promptText="#4B7BEC"/>
+
+                                <Separator/>
+
+                                <Label text="Tile Coordinates" styleClass="section-label"/>
+
+                                <GridPane hgap="10" vgap="8">
+                                    <Label text="Col (x)" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                    <Spinner fx:id="layoutColSpinner" prefWidth="90"
+                                             GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                    <Label text="Row (y)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                    <Spinner fx:id="layoutRowSpinner" prefWidth="90"
+                                             GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                    <Label fx:id="layoutCoordInfoLabel"
+                                           text="Pos: -"
+                                           GridPane.rowIndex="2"
+                                           GridPane.columnIndex="0"
+                                           GridPane.columnSpan="2"/>
+                                </GridPane>
+
+                                <HBox spacing="10">
+                                    <Button text="Save"
+                                            onAction="#onSaveTileClicked"
+                                            styleClass="button-success"
+                                            maxWidth="Infinity"
+                                            HBox.hgrow="ALWAYS"/>
+                                    <Button text="Clear Tile"
+                                            onAction="#onClearTileClicked"
+                                            styleClass="button-danger"
+                                            maxWidth="Infinity"
+                                            HBox.hgrow="ALWAYS"/>
+                                </HBox>
+
+                                <Label fx:id="layoutMsgLabel" styleClass="error-label"/>
+                            </VBox>
+                        </right>
+                    </BorderPane>
+                </content>
+            </Tab>
+
+            <!-- POS -->
+            <Tab text="POS" closable="false">
+                <content>
+                    <StackPane>
+
+                        <HBox spacing="12">
+                            <padding>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
+                            </padding>
+
+                            <!-- LEFT -->
+                            <VBox spacing="10" prefWidth="720" styleClass="panel">
+                                <padding>
+                                    <Insets top="12" right="12" bottom="12" left="12"/>
+                                </padding>
+
+                                <HBox spacing="10">
+                                    <Label text="Quick Buttons" styleClass="section-label"/>
+                                    <Pane HBox.hgrow="ALWAYS"/>
+                                    <Button text="Page 1" onAction="#onPage1" styleClass="button-primary"/>
+                                    <Button text="Page 2" onAction="#onPage2" styleClass="button-neutral"/>
+                                    <Button text="Back" onAction="#onQuickBack" styleClass="button-warning"/>
+                                </HBox>
+
+                                <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <GridPane fx:id="quickGrid" hgap="0" vgap="0" styleClass="grid-background"/>
+                                    </content>
+                                </ScrollPane>
+
+
+                            </VBox>
+
+                            <!-- RIGHT -->
+                            <VBox spacing="10" prefWidth="360" styleClass="panel">
+                                <padding>
+                                    <Insets top="12" right="12" bottom="12" left="12"/>
+                                </padding>
+
+                                <Label text="Basket" styleClass="section-label"/>
+
+                                <ListView fx:id="basketListView" VBox.vgrow="ALWAYS" prefHeight="320"/>
+
+                                <HBox spacing="10">
+                                    <Button text="Remove Selected"
+                                            onAction="#onRemoveSelectedClicked"
+                                            styleClass="button-warning"
+                                            maxWidth="Infinity"
+                                            HBox.hgrow="ALWAYS"/>
+                                    <Button text="Clear"
+                                            onAction="#onClearBasketClicked"
+                                            styleClass="button-danger"
+                                            maxWidth="Infinity"
+                                            HBox.hgrow="ALWAYS"/>
+                                </HBox>
+
+                                <Separator/>
+
+                                <GridPane hgap="10" vgap="8">
+                                    <Label text="Total (ex VAT):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                    <Label fx:id="totalExLabel" text="€0.00" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                    <Label text="VAT:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                    <Label fx:id="vatLabel" text="€0.00" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                    <Label text="Total (inc VAT):" styleClass="section-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                    <Label fx:id="totalIncLabel" text="€0.00" styleClass="section-label" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                </GridPane>
+
+                                <Separator/>
+
+                                <Button fx:id="sendButton"
+                                        text="SEND"
+                                        onAction="#onSendClicked"
+                                        maxWidth="Infinity"
+                                        styleClass="button-success big-action-button"/>
+
+                                <Label fx:id="posMessageLabel" styleClass="error-label"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- PAYMENT OVERLAY -->
+                        <VBox fx:id="paymentOverlay"
+                              visible="false"
+                              managed="false"
+                              alignment="CENTER"
+                              spacing="20"
+                              style="-fx-background-color: rgba(0,0,0,0.88);">
+
+                            <padding>
+                                <Insets top="30" right="30" bottom="30" left="30"/>
+                            </padding>
+
+                            <Label fx:id="paymentTotalLabel"
+                                   text="Total: €0.00"
+                                   styleClass="title-label"/>
+
+                            <HBox fx:id="paymentChoiceBox"
+                                  visible="false"
+                                  managed="false"
+                                  spacing="20"
+                                  alignment="CENTER">
+
+                                <Button text="CARD"
+                                        onAction="#onCardPaymentClicked"
+                                        styleClass ="payment-card"
+                                        prefWidth="420"
+                                        prefHeight="320"
+                                        />
+
+                                <Button text="CASH"
+                                        onAction="#onCashPaymentClicked"
+                                        prefWidth="420"
+                                        prefHeight="320"
+                                        styleClass="payment-cash"/>
+                            </HBox>
+
+                            <VBox fx:id="cashPaymentBox"
+                                  visible="false"
+                                  managed="false"
+                                  alignment="CENTER"
+                                  spacing="16">
+
+                                <Label fx:id="cashEnteredLabel"
+                                       text="Cash: €0.00"
+                                       styleClass="section-label"/>
+
+                                <Label fx:id="bigChangeLabel"
+                                       text="Change: €0.00"
+                                       styleClass="title-label"/>
+
+                                <GridPane hgap="12" vgap="12" alignment="CENTER">
+                                    <Button text="1" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90"/>
+                                    <Button text="2" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.columnIndex="1"/>
+                                    <Button text="3" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.columnIndex="2"/>
+
+                                    <Button text="4" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.rowIndex="1"/>
+                                    <Button text="5" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                    <Button text="6" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                                    <Button text="7" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.rowIndex="2"/>
+                                    <Button text="8" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                    <Button text="9" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+
+                                    <Button text="Clear" onAction="#onCashClearClicked" prefWidth="140" prefHeight="90" styleClass="button-warning" GridPane.rowIndex="3"/>
+                                    <Button text="0" onAction="#onCashKeyClicked" prefWidth="140" prefHeight="90" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                    <Button text="⌫" onAction="#onCashBackspaceClicked" prefWidth="140" prefHeight="90" styleClass="button-danger" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                                </GridPane>
+
+                                <HBox spacing="16" alignment="CENTER">
+                                    <Button text="Back"
+                                            onAction="#onSendClicked"
+                                            prefWidth="180"
+                                            prefHeight="70"
+                                            styleClass="button-warning"/>
+
+                                    <Button text="Send"
+                                            onAction="#onCashSendClicked"
+                                            prefWidth="180"
+                                            prefHeight="70"
+                                            styleClass="button-success"/>
+
+                                    <Button text="Cancel"
+                                            onAction="#onCancelPaymentClicked"
+                                            prefWidth="180"
+                                            prefHeight="70"
+                                            styleClass="button-danger"/>
+                                </HBox>
+                            </VBox>
+
+                            <Button text="Cancel Payment"
+                                    onAction="#onCancelPaymentClicked"
+                                    prefWidth="220"
+                                    prefHeight="60"
+                                    styleClass="button-danger"/>
+                        </VBox>
+                    </StackPane>
+                </content>
+            </Tab>
+
+
+
+            <!-- SALES HISTORY -->
+            <Tab fx:id="salesHistoryTab" text="Sales History" closable="false">
+                <content>
+                    <BorderPane>
+                        <padding>
+                            <Insets top="12" right="12" bottom="12" left="12"/>
+                        </padding>
+
+                        <top>
+                            <HBox spacing="10" styleClass="panel">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
+
+                                <Label text="Sales History" styleClass="section-label"/>
+                                <Pane HBox.hgrow="ALWAYS"/>
+                                <Button text="Refresh" onAction="#onRefreshSalesHistoryClicked" styleClass="button-primary"/>
+                            </HBox>
+                        </top>
+
+                        <center>
+                            <SplitPane dividerPositions="0.62">
+                                <items>
+                                    <VBox spacing="10" styleClass="panel">
+                                        <padding>
+                                            <Insets top="12" right="12" bottom="12" left="12"/>
+                                        </padding>
+
+                                        <Label text="Sales" styleClass="section-label"/>
+                                        <TableView fx:id="salesHistoryTable" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colSaleId" text="Sale ID" prefWidth="90"/>
+                                                <TableColumn fx:id="colSaleTime" text="Time" prefWidth="180"/>
+                                                <TableColumn fx:id="colSaleStaff" text="Staff" prefWidth="140"/>
+                                                <TableColumn fx:id="colSalePayment" text="Payment" prefWidth="100"/>
+                                                <TableColumn fx:id="colSaleTotal" text="Total" prefWidth="100"/>
+                                            </columns>
+                                        </TableView>
+                                    </VBox>
+
+                                    <VBox spacing="10" styleClass="panel">
+                                        <padding>
+                                            <Insets top="12" right="12" bottom="12" left="12"/>
+                                        </padding>
+
+                                        <Label fx:id="salesHistorySelectedLabel" text="Select a sale" styleClass="section-label"/>
+                                        <ListView fx:id="salesHistoryItemsList" VBox.vgrow="ALWAYS"/>
+                                    </VBox>
+                                </items>
+                            </SplitPane>
+                        </center>
+                    </BorderPane>
+                </content>
+            </Tab>
+
+            <!-- TABS -->
+            <Tab fx:id="tabsTab" text="Tabs" closable="false">
+                <content>
+                    <BorderPane>
+                        <padding>
+                            <Insets top="12" right="12" bottom="12" left="12"/>
+                        </padding>
+
+                        <top>
+                            <HBox styleClass="panel">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
+
+                                <Label text="Tabs 1 to 50" styleClass="section-label"/>
+                            </HBox>
+                        </top>
+
+                        <center>
+                            <ScrollPane fitToWidth="true" fitToHeight="true">
+                                <content>
+                                    <GridPane fx:id="tabsGrid" hgap="0" vgap="0" styleClass="grid-background"/>
+                                </content>
+                            </ScrollPane>
+                        </center>
+                    </BorderPane>
+                </content>
+            </Tab>
+
+            <!-- REPORTS -->
+            <Tab fx:id="reportsTab" text="Reports" closable="false">
+                <content>
+                    <VBox spacing="12">
+                        <padding>
+                            <Insets top="12" right="12" bottom="12" left="12"/>
+                        </padding>
+
+                        <Label text="Reports" styleClass="section-label"/>
+
+                        <TitledPane text="End of Day" expanded="true">
+                            <content>
+                                <VBox spacing="10">
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
+                                    </padding>
+
+                                    <HBox spacing="10">
+                                        <Label text="Date:"/>
+                                        <DatePicker fx:id="eodDatePicker"/>
+                                        <Button text="Run" onAction="#onRunEodClicked" styleClass="button-primary"/>
+                                    </HBox>
+
+                                    <TextArea fx:id="eodOutput" prefRowCount="8" editable="false"/>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+
+                        <TitledPane text="VAT Report" expanded="false">
+                            <content>
+                                <VBox spacing="10">
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
+                                    </padding>
+
+                                    <HBox spacing="10">
+                                        <Label text="From:"/>
+                                        <DatePicker fx:id="vatFromDatePicker"/>
+                                        <Label text="To:"/>
+                                        <DatePicker fx:id="vatToDatePicker"/>
+                                        <Button text="Run" onAction="#onRunVatClicked" styleClass="button-primary"/>
+                                    </HBox>
+
+                                    <TextArea fx:id="vatOutput" prefRowCount="10" editable="false"/>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                    </VBox>
+                </content>
+            </Tab>
+
+            <!-- STOCK -->
+            <Tab fx:id="stockTab" text="Stock" closable="false">
+                <content>
+                    <BorderPane>
+                        <padding>
+                            <Insets top="12" right="12" bottom="12" left="12"/>
+                        </padding>
+
+                        <top>
+                            <HBox spacing="10" styleClass="panel">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
+
+                                <Label text="Stock" styleClass="section-label"/>
+                                <Pane HBox.hgrow="ALWAYS"/>
+                                <Button text="Refresh" onAction="#onRefreshStockClicked" styleClass="button-primary"/>
+                            </HBox>
+                        </top>
+
+                        <center>
+                            <VBox spacing="10" styleClass="panel">
+                                <padding>
+                                    <Insets top="12" right="12" bottom="12" left="12"/>
+                                </padding>
+
+                                <TableView fx:id="productTable" prefHeight="260">
+                                    <columns>
+                                        <TableColumn fx:id="colName" text="Name" prefWidth="220"/>
+                                        <TableColumn fx:id="colBarcode" text="Barcode" prefWidth="100"/>
+                                        <TableColumn fx:id="colPrice" text="Price (ex)" prefWidth="100"/>
+                                        <TableColumn fx:id="colCostPrice" text="Cost Price" prefWidth="100"/>
+                                        <TableColumn fx:id="colVat" text="VAT%" prefWidth="60"/>
+                                        <TableColumn fx:id="colActive" text="Active" prefWidth="70"/>
+                                        <TableColumn fx:id="colCategory" text="Category" prefWidth="120"/>
+                                    </columns>
+                                </TableView>
+
+                                <Label text="Stock movements (selected product)" styleClass="section-label"/>
+
+                                <TableView fx:id="movementTable" prefHeight="160">
+                                    <columns>
+                                        <TableColumn fx:id="colMovTime" text="Time" prefWidth="170"/>
+                                        <TableColumn fx:id="colMovUser" text="Staff" prefWidth="120"/>
+                                        <TableColumn fx:id="colMovReason" text="Reason" prefWidth="90"/>
+                                        <TableColumn fx:id="colMovQty" text="Qty" prefWidth="60"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </center>
+
+                        <right>
+                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+                                <content>
+                                    <VBox spacing="10" prefWidth="270" styleClass="panel">
+                                        <padding>
+                                            <Insets top="12" right="12" bottom="12" left="12"/>
+                                        </padding>
+
+
+                                        <Separator/>
+
+                                        <Label text="Product Category" styleClass="section-label"/>
+                                        <ComboBox fx:id="categoryCombo" promptText="Select category"/>
+                                        <Button text="Set Category"
+                                                onAction="#onSetCategoryClicked"
+                                                styleClass="button-primary"
+                                                maxWidth="Infinity"/>
+
+                                        <Separator/>
+
+                                        <Label text="Create category" styleClass="section-label"/>
+                                        <TextField fx:id="newCategoryNameField" promptText="Category name (e.g. Beer)"/>
+                                        <TextField fx:id="newCategoryColorField" promptText="Color hex (optional) e.g. #4B7BEC"/>
+
+                                        <HBox spacing="10">
+                                            <Button text="Create"
+                                                    onAction="#onCreateCategoryClicked"
+                                                    styleClass="button-success"
+                                                    maxWidth="Infinity"
+                                                    HBox.hgrow="ALWAYS"/>
+                                            <Button text="Refresh"
+                                                    onAction="#onRefreshCategoriesClicked"
+                                                    styleClass="button-neutral"
+                                                    maxWidth="Infinity"
+                                                    HBox.hgrow="ALWAYS"/>
+                                        </HBox>
+
+                                        <Separator/>
+
+                                        <Label text="Add product" styleClass="section-label"/>
+                                        <TextField fx:id="newProdNameField" promptText="Name"/>
+                                        <TextField fx:id="newProdBarcodeField" promptText="Barcode (optional)"/>
+                                        <TextField fx:id="newProdPriceField" promptText="Price ex VAT (e.g. 5.50)"/>
+                                        <TextField fx:id="newProdCostField" promptText="Cost price (e.g. 2.10)"/>
+                                        <TextField fx:id="newProdVatField" promptText="VAT rate (e.g. 23)"/>
+
+                                        <Button text="Create Product"
+                                                onAction="#onCreateProductClicked"
+                                                styleClass="button-success"
+                                                maxWidth="Infinity"/>
+
+                                        <Separator/>
+
+                                        <Label text="Bulk import" styleClass="section-label"/>
+                                        <Button text="Import products from CSV"
+                                                onAction="#onImportProductsClicked"
+                                                styleClass="button-primary"
+                                                maxWidth="Infinity"/>
+                                    </VBox>
+                                </content>
+                            </ScrollPane>
+                        </right>
+
+                    </BorderPane>
+                </content>
+            </Tab>
+
+            <!-- STAFF -->
+            <Tab fx:id="staffTab" text="Staff" closable="false">
+                <content>
+                    <VBox spacing="10" styleClass="panel">
+                        <padding>
+                            <Insets top="12" right="12" bottom="12" left="12"/>
+                        </padding>
+
+                        <Label text="Create staff user" styleClass="section-label"/>
+
+                        <GridPane hgap="10" vgap="10">
+                            <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="newUsernameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <PasswordField fx:id="newPasswordField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Label text="Role:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="roleCombo" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                            <Label text="PIN (2 digits):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <TextField fx:id="newPinField" promptText="e.g. 01" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        </GridPane>
+
+                        <HBox spacing="10">
+                            <Button text="Create User" onAction="#onCreateUserClicked" styleClass="button-success"/>
+                            <Label fx:id="staffMessageLabel" styleClass="error-label"/>
+                        </HBox>
+
+                        <Separator/>
+
+                        <Label text="Existing staff" styleClass="section-label"/>
+                        <ListView fx:id="staffListView" prefHeight="220"/>
+                    </VBox>
+                </content>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+</BorderPane>
