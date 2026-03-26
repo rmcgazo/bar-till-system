@@ -4,17 +4,11 @@ CREATE TABLE IF NOT EXISTS staff (
                                      id INTEGER PRIMARY KEY AUTOINCREMENT,
                                      username TEXT NOT NULL UNIQUE,
                                      password_hash TEXT NOT NULL,
+                                     pin_code TEXT UNIQUE,
                                      role TEXT NOT NULL CHECK (role IN ('MANAGER','BARTENDER','WAITRESS')),
     active INTEGER NOT NULL DEFAULT 1 CHECK (active IN (0,1)),
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
-
-
-
-
--- optional: ensure only 2 digits (SQLite doesn't enforce CHECK well on ALTER, so we'll enforce in Java too)
--- optional: you can also add a unique index if you want each PIN unique:
-CREATE UNIQUE INDEX IF NOT EXISTS ux_staff_pin_code ON staff(pin_code) WHERE pin_code IS NOT NULL;
 
 
 
