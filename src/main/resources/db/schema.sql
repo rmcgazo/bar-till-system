@@ -140,3 +140,9 @@ CREATE TABLE IF NOT EXISTS stock_item_movements (
                                                     FOREIGN KEY (stock_item_id) REFERENCES stock_items(id),
     FOREIGN KEY (staff_id) REFERENCES staff(id)
     );
+
+ALTER TABLE products ADD COLUMN cost_price_cents INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE products ADD COLUMN default_qty_used INTEGER NOT NULL DEFAULT 1;
+ALTER TABLE products ADD COLUMN default_stock_item_id INTEGER;
+ALTER TABLE sales ADD COLUMN payment_method TEXT NOT NULL DEFAULT 'CASH';
+ALTER TABLE stock_items ADD COLUMN low_stock_threshold_base_units INTEGER NOT NULL DEFAULT 0;
