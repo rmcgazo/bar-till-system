@@ -57,7 +57,7 @@
 ---
 ## 🗄️ Database Schema
 
-![Database](screenshots/untitled.png)
+![Database](screenshots/Untitled.png)
 
 ---
 
