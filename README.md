@@ -55,6 +55,11 @@
 ![Login](screenshots/login-screen.png)
 
 ---
+## 🗄️ Database Schema
+
+![Database](screenshots/untitled.png)
+
+---
 
 ## 🛠️ Tech Stack
 
