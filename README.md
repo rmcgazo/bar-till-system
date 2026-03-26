@@ -1,6 +1,8 @@
-# 🍺 Bar Till System (JavaFX POS)
+# 🍺 Bar Till System
 
-A full-featured bar POS system built in Java using JavaFX.
+![Java](https://img.shields.io/badge/Java-17-blue) ![JavaFX](https://img.shields.io/badge/JavaFX-UI-green) ![Database](https://img.shields.io/badge/SQLite-Database-lightgrey) ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
+
+> A full-featured JavaFX Point of Sale (POS) system for bars and hospitality environments.
 
 ---
 
@@ -10,9 +12,23 @@ A full-featured bar POS system built in Java using JavaFX.
 
 ---
 
-## 🔐 Login Screen
+## 🚀 Key Features
 
-![Login](screenshots/login-screen.png)
+- 🧾 POS interface with quick-access buttons  
+- 📦 Real-time inventory tracking  
+- 🍺 Keg, bottle, and spirit stock handling  
+- 🚚 Delivery and stock adjustment system  
+- 📊 Profit, revenue, and wastage reports  
+- 🧠 Smart stock alerts and insights  
+
+---
+
+## ⚙️ How It Works
+
+- Products are linked to stock items (e.g. vodka bottle, keg)  
+- Each sale deducts stock based on defined usage (e.g. 35ml per drink)  
+- Stock levels are updated in real time  
+- Reports calculate revenue, cost, profit, and wastage automatically  
 
 ---
 
@@ -34,22 +50,30 @@ A full-featured bar POS system built in Java using JavaFX.
 
 ---
 
-## 🚀 Features
+## 🔐 Login Screen
 
-* POS system with quick buttons
-* Stock tracking (kegs, bottles, spirits)
-* Deliveries & stock adjustments
-* Full stock take system
-* Profit & wastage reports
-* Database-driven UI
+![Login](screenshots/login-screen.png)
 
 ---
 
 ## 🛠️ Tech Stack
 
-* Java
-* JavaFX
-* SQLite
-* Maven
+- Java  
+- JavaFX  
+- SQLite  
+- Maven  
 
 ---
+
+## 🛠️ Setup
+
+1. Clone the repository  
+2. Open in IntelliJ  
+3. Run with Maven:
+
+---
+
+## 📦 Requirements
+
+- Java 17+  
+- Maven  
