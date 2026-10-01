@@ -1,29 +1,29 @@
-# 🍺 Bar Till System
+Bar Till System
 
-![Java](https://img.shields.io/badge/Java-17-blue) ![JavaFX](https://img.shields.io/badge/JavaFX-UI-green) ![Database](https://img.shields.io/badge/SQLite-Database-lightgrey) ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
+
 
 > A full-featured JavaFX Point of Sale (POS) system for bars and hospitality environments.
 
 ---
 
-## 🧾 POS Interface
+POS Interface
 
 ![POS](screenshots/pos-main-screen.png)
 
 ---
 
-## 🚀 Key Features
+Key Features
 
-- 🧾 POS interface with quick-access buttons  
-- 📦 Real-time inventory tracking  
-- 🍺 Keg, bottle, and spirit stock handling  
-- 🚚 Delivery and stock adjustment system  
-- 📊 Profit, revenue, and wastage reports  
-- 🧠 Smart stock alerts and insights  
+- POS interface with quick-access buttons  
+- Real-time inventory tracking  
+- Keg, bottle, and spirit stock handling  
+- Delivery and stock adjustment system  
+- Profit, revenue, and wastage reports  
+- Smart stock alerts and insights  
 
 ---
 
-## ⚙️ How It Works
+ How It Works
 
 - Products are linked to stock items (e.g. vodka bottle, keg)  
 - Each sale deducts stock based on defined usage (e.g. 35ml per drink)  
@@ -32,36 +32,35 @@
 
 ---
 
-## 📦 Inventory Dashboard
+ Inventory Dashboard
 
 ![Inventory](screenshots/inventory-dashboard.png)
 
 ---
 
-## 📊 Stock Take
+Stock Take
 
 ![Stock Take](screenshots/stock-take.png)
 
 ---
 
-## 📈 Reports
+Reports
 
 ![Reports](screenshots/reports-dashboard.png)
 
 ---
 
-## 🔐 Login Screen
+Login Screen
 
 ![Login](screenshots/login-screen.png)
 
 ---
-## 🗄️ Database Schema
-
+Database Schema
 ![Database](screenshots/Untitled.png)
 
 ---
 
-## 🛠️ Tech Stack
+Tech Stack
 
 - Java  
 - JavaFX  
@@ -70,7 +69,7 @@
 
 ---
 
-## 🛠️ Setup
+Setup
 
 1. Clone the repository  
 2. Open in IntelliJ  
@@ -78,7 +77,7 @@
 
 ---
 
-## 📦 Requirements
+Requirements
 
 - Java 17+  
 - Maven  
